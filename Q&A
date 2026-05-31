@@ -1,0 +1,47 @@
+Q1. Why did you choose Logistic Regression for this project?
+A1. Logistic Regression is a simple and effective algorithm for classification problems. Since the Iris dataset is clean, small, and linearly 
+    separable — Logistic Regression performs very well and gives high accuracy. It also helps understand how 
+    basic classification works before trying complex models.
+
+Q2. Why didn’t you use KNN, Decision Tree, or SVM?
+A2. I focused on Logistic Regression for simplicity and interpretability. However, I’m aware of other models like KNN and SVM which could work well too. 
+    For this project, since Logistic Regression already gave 100% accuracy, trying other models wasn't necessary — but I can easily extend the notebook to compare them if needed.
+
+Q3️. What kind of preprocessing or data cleaning did you do?
+A3. I checked for:
+    1. Null values (there were none)
+    2. Duplicate rows (removed if found)
+    3. Encoded the target variable (species) using LabelEncoder
+    4. Split the dataset into training and test sets using train_test_split
+
+    The dataset was already very clean, so minimal preprocessing was needed.
+
+Q4️. What does the Confusion Matrix show in your results?
+A4. The confusion matrix showed that all predictions were correct — no misclassifications. Each class (Setosa, Versicolor, Virginica) was perfectly predicted, 
+indicating 100% model accuracy.
+
+Q5️. How many classes are there in the target variable?
+A5. There are three classes:
+
+    0: Setosa
+    1: Versicolor
+    2: Virginica
+
+Q6️. How is the data distributed across these classes?
+A6. Each species has 50 samples, so the dataset is balanced, which helps the model learn equally well for all classes.
+
+Q7️. What insights did you get from the Pairplot and Heatmap?
+A7. Pairplot showed that Setosa is clearly separated from the other two species, especially based on petal features.
+    Heatmap showed that petal length and petal width are highly correlated, while sepal width had weaker correlations.
+
+Q8️. What is the accuracy of your model?
+A7. The Logistic Regression model gave 100% accuracy on the test dataset.
+
+Q9️. Which features are most important for classification?
+A9. Petal length and petal width are the most important features — they provide the clearest separation between the classes, especially Setosa vs others.
+
+Q1️0. If the dataset had more noise or was imbalanced, what would you change?
+A10. I would try more robust models like Random Forest or SVM, apply normalization, handle class imbalance using techniques like SMOTE, 
+and use cross-validation for better evaluation.
+
+

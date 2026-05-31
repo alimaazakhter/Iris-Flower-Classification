@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iris Species Predictor & ML Sandbox</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="dashboard-wrapper">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-area">
+                    <span class="logo-icon"><i data-lucide="flower"></i></span>
+                    <div class="logo-text">
+                        <h1>IrisML</h1>
+                        <span>Sandbox Studio</span>
+                    </div>
+                </div>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="active" data-section="playground"><a href="#playground"><i data-lucide="layout-dashboard"></i> <span>Playground</span></a></li>
+                    <li data-section="sandbox"><a href="#sandbox"><i data-lucide="binary"></i> <span>Model Sandbox</span></a></li>
+                    <li data-section="explorer"><a href="#explorer"><i data-lucide="line-chart"></i> <span>Data Explorer</span></a></li>
+                    <li data-section="faq"><a href="#faq"><i data-lucide="help-circle"></i> <span>Project Q&A</span></a></li>
+                    <li data-section="code"><a href="#code"><i data-lucide="code-2"></i> <span>Code Showcase</span></a></li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="author-badge">
+                    <div class="avatar">AA</div>
+                    <div class="author-info">
+                        <h4>Alimaaz Akhter</h4>
+                        <p>CodeAlpha Intern</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <header class="content-header">
+                <div class="header-titles">
+                    <p class="breadcrumbs">Portfolio Projects / Iris Classification</p>
+                    <h2>Interactive Iris Flower Classifier</h2>
+                </div>
+                <div class="header-actions">
+                    <div class="pill-badge active-pill">
+                        <span class="dot"></span> Client-Side ML Active
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-body">
+                <!-- Section 1: Predictor & SVG Flower (Playground) -->
+                <section id="playground-sec" class="dashboard-section active">
+                    <div class="grid-2-col">
+                        <!-- Left Panel: Input Sliders -->
+                        <div class="glass-card panel-predict">
+                            <div class="card-header">
+                                <div class="title-with-icon">
+                                    <i data-lucide="sliders" class="icon-teal"></i>
+                                    <h3>Adjust Flower Measurements</h3>
+                                </div>
+                                <span class="badge">Input</span>
+                            </div>
+                            <div class="card-body">
+                                <div class="sliders-container">
+                                    <!-- Sepal Length -->
+                                    <div class="slider-group">
+                                        <div class="slider-labels">
+                                            <span class="slider-name">Sepal Length</span>
+                                            <span class="slider-val" id="sepal-length-val">5.8 cm</span>
+                                        </div>
+                                        <input type="range" id="sepal-length" min="4.0" max="8.0" step="0.1" value="5.8" class="custom-slider">
+                                        <div class="slider-limits">
+                                            <span>4.0 cm</span>
+                                            <span>8.0 cm</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Sepal Width -->
+                                    <div class="slider-group">
+                                        <div class="slider-labels">
+                                            <span class="slider-name">Sepal Width</span>
+                                            <span class="slider-val" id="sepal-width-val">3.0 cm</span>
+                                        </div>
+                                        <input type="range" id="sepal-width" min="2.0" max="4.5" step="0.1" value="3.0" class="custom-slider">
+                                        <div class="slider-limits">
+                                            <span>2.0 cm</span>
+                                            <span>4.5 cm</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Petal Length -->
+                                    <div class="slider-group">
+                                        <div class="slider-labels">
+                                            <span class="slider-name">Petal Length</span>
+                                            <span class="slider-val" id="petal-length-val">4.3 cm</span>
+                                        </div>
+                                        <input type="range" id="petal-length" min="1.0" max="7.0" step="0.1" value="4.3" class="custom-slider">
+                                        <div class="slider-limits">
+                                            <span>1.0 cm</span>
+                                            <span>7.0 cm</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Petal Width -->
+                                    <div class="slider-group">
+                                        <div class="slider-labels">
+                                            <span class="slider-name">Petal Width</span>
+                                            <span class="slider-val" id="petal-width-val">1.3 cm</span>
+                                        </div>
+                                        <input type="range" id="petal-width" min="0.1" max="2.5" step="0.1" value="1.3" class="custom-slider">
+                                        <div class="slider-limits">
+                                            <span>0.1 cm</span>
+                                            <span>2.5 cm</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="model-picker-wrapper">
+                                    <label for="active-model-select">Active ML Classifier:</label>
+                                    <div class="select-container">
+                                        <select id="active-model-select" class="custom-select">
+                                            <option value="logistic">Logistic Regression</option>
+                                            <option value="knn">K-Nearest Neighbors (KNN)</option>
+                                            <option value="tree">Decision Tree Classifier</option>
+                                        </select>
+                                        <i data-lucide="chevron-down" class="select-arrow"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Panel: SVG Visualizer & Outputs -->
+                        <div class="glass-card panel-visualizer">
+                            <div class="card-header">
+                                <div class="title-with-icon">
+                                    <i data-lucide="eye" class="icon-violet"></i>
+                                    <h3>Real-Time SVG Representation</h3>
+                                </div>
+                                <span class="badge badge-success">Live View</span>
+                            </div>
+                            <div class="card-body centered-content">
+                                <div class="flower-visualizer-container">
+                                    <!-- Dynamic SVG Flower -->
+                                    <svg id="flower-svg" viewBox="0 0 200 200" class="flower-svg">
+                                        <!-- Ambient Glow Background -->
+                                        <defs>
+                                            <radialGradient id="glow-grad" cx="50%" cy="50%" r="50%">
+                                                <stop offset="0%" stop-color="var(--species-glow, var(--primary-light))" stop-opacity="0.3" />
+                                                <stop offset="100%" stop-color="var(--bg-card)" stop-opacity="0" />
+                                            </radialGradient>
+                                        </defs>
+                                        <circle cx="100" cy="90" r="70" fill="url(#glow-grad)" id="flower-glow" />
+
+                                        <!-- Flower Stem -->
+                                        <path d="M 100 90 Q 95 160 90 200" stroke="#4ade80" stroke-width="4" fill="none" stroke-linecap="round" />
+                                        <path d="M 94 135 Q 70 120 74 105" stroke="#4ade80" stroke-width="3" fill="none" stroke-linecap="round" />
+                                        
+                                        <!-- Sepals (Outer Green Layers) -->
+                                        <g id="sepals-group" fill="#22c55e" fill-opacity="0.85">
+                                            <!-- Dynamic Sepals drawn via JS -->
+                                        </g>
+
+                                        <!-- Petals (Inner Colored Layers) -->
+                                        <g id="petals-group" fill="#a855f7" fill-opacity="0.9">
+                                            <!-- Dynamic Petals drawn via JS -->
+                                        </g>
+
+                                        <!-- Center Pistil -->
+                                        <circle cx="100" cy="90" r="12" fill="#fbbf24" stroke="#d97706" stroke-width="1.5" />
+                                        <circle cx="97" cy="87" r="2" fill="#fff" opacity="0.5" />
+                                    </svg>
+                                </div>
+
+                                <div class="predictions-display">
+                                    <div class="result-heading">
+                                        <span class="small-label">Predicted Species</span>
+                                        <h3 id="predicted-species-name">Iris Versicolor</h3>
+                                    </div>
+                                    <div class="probabilities-list">
+                                        <!-- Setosa Bar -->
+                                        <div class="prob-row" id="prob-setosa-row">
+                                            <div class="prob-meta">
+                                                <span class="species-label-dot setosa-dot"></span>
+                                                <span class="species-name">Setosa</span>
+                                                <span class="prob-pct" id="prob-setosa-pct">0%</span>
+                                            </div>
+                                            <div class="progress-bar-bg">
+                                                <div class="progress-bar-fill setosa-fill" id="prob-setosa-bar" style="width: 0%"></div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Versicolor Bar -->
+                                        <div class="prob-row" id="prob-versicolor-row">
+                                            <div class="prob-meta">
+                                                <span class="species-label-dot versicolor-dot"></span>
+                                                <span class="species-name">Versicolor</span>
+                                                <span class="prob-pct" id="prob-versicolor-pct">100%</span>
+                                            </div>
+                                            <div class="progress-bar-bg">
+                                                <div class="progress-bar-fill versicolor-fill" id="prob-versicolor-bar" style="width: 100%"></div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Virginica Bar -->
+                                        <div class="prob-row" id="prob-virginica-row">
+                                            <div class="prob-meta">
+                                                <span class="species-label-dot virginica-dot"></span>
+                                                <span class="species-name">Virginica</span>
+                                                <span class="prob-pct" id="prob-virginica-pct">0%</span>
+                                            </div>
+                                            <div class="progress-bar-bg">
+                                                <div class="progress-bar-fill virginica-fill" id="prob-virginica-bar" style="width: 0%"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 2: Model Sandbox (Training & Config) -->
+                <section id="sandbox-sec" class="dashboard-section">
+                    <div class="grid-2-col">
+                        <!-- Left Panel: Sandbox Settings -->
+                        <div class="glass-card">
+                            <div class="card-header">
+                                <div class="title-with-icon">
+                                    <i data-lucide="settings-2" class="icon-blue"></i>
+                                    <h3>Model Training Hyperparameters</h3>
+                                </div>
+                                <span class="badge badge-accent">Sandbox</span>
+                            </div>
+                            <div class="card-body">
+                                <div class="training-model-selector">
+                                    <label class="section-subheading">Select Model to Train:</label>
+                                    <div class="radio-group-cards">
+                                        <label class="radio-card active">
+                                            <input type="radio" name="train-model" value="logistic" checked>
+                                            <div class="radio-card-content">
+                                                <i data-lucide="git-commit"></i>
+                                                <span>Logistic Regression</span>
+                                            </div>
+                                        </label>
+                                        <label class="radio-card">
+                                            <input type="radio" name="train-model" value="knn">
+                                            <div class="radio-card-content">
+                                                <i data-lucide="network"></i>
+                                                <span>K-Nearest Neighbors</span>
+                                            </div>
+                                        </label>
+                                        <label class="radio-card">
+                                            <input type="radio" name="train-model" value="tree">
+                                            <div class="radio-card-content">
+                                                <i data-lucide="git-fork"></i>
+                                                <span>Decision Tree</span>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- Hyperparameter Settings (Dynamic display via JS) -->
+                                <div class="hyperparams-container">
+                                    <div class="split-params">
+                                        <div class="slider-group">
+                                            <div class="slider-labels">
+                                                <span class="slider-name">Train/Test Split Ratio</span>
+                                                <span class="slider-val" id="split-ratio-val">80/20</span>
+                                            </div>
+                                            <input type="range" id="split-ratio" min="50" max="90" step="5" value="80" class="custom-slider">
+                                            <div class="slider-limits">
+                                                <span>50/50</span>
+                                                <span>90/10</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <hr class="separator">
+
+                                    <!-- Parameter Blocks -->
+                                    <div id="params-logistic" class="param-block active">
+                                        <div class="slider-group">
+                                            <div class="slider-labels">
+                                                <span class="slider-name">Learning Rate (Alpha)</span>
+                                                <span class="slider-val" id="lr-val">0.1</span>
+                                            </div>
+                                            <input type="range" id="lr" min="0.01" max="1.0" step="0.05" value="0.1" class="custom-slider">
+                                            <div class="slider-limits">
+                                                <span>0.01</span>
+                                                <span>1.0</span>
+                                            </div>
+                                        </div>
+                                        <div class="slider-group">
+                                            <div class="slider-labels">
+                                                <span class="slider-name">Max Iterations</span>
+                                                <span class="slider-val" id="epochs-val">500</span>
+                                            </div>
+                                            <input type="range" id="epochs" min="50" max="2000" step="50" value="500" class="custom-slider">
+                                            <div class="slider-limits">
+                                                <span>50</span>
+                                                <span>2000</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="params-knn" class="param-block">
+                                        <div class="slider-group">
+                                            <div class="slider-labels">
+                                                <span class="slider-name">Number of Neighbors (K)</span>
+                                                <span class="slider-val" id="knn-k-val">3</span>
+                                            </div>
+                                            <input type="range" id="knn-k" min="1" max="15" step="1" value="3" class="custom-slider">
+                                            <div class="slider-limits">
+                                                <span>1</span>
+                                                <span>15</span>
+                                            </div>
+                                        </div>
+                                        <div class="select-container param-select">
+                                            <label for="knn-metric">Distance Metric:</label>
+                                            <select id="knn-metric" class="custom-select">
+                                                <option value="euclidean">Euclidean Distance</option>
+                                                <option value="manhattan">Manhattan Distance</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div id="params-tree" class="param-block">
+                                        <div class="slider-group">
+                                            <div class="slider-labels">
+                                                <span class="slider-name">Max Tree Depth</span>
+                                                <span class="slider-val" id="tree-depth-val">3</span>
+                                            </div>
+                                            <input type="range" id="tree-depth" min="1" max="10" step="1" value="3" class="custom-slider">
+                                            <div class="slider-limits">
+                                                <span>1</span>
+                                                <span>10</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button id="btn-train" class="primary-btn mt-large">
+                                    <i data-lucide="play" class="btn-icon"></i>
+                                    <span>Train Model</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Right Panel: Training Outputs/Evaluation -->
+                        <div class="glass-card">
+                            <div class="card-header">
+                                <div class="title-with-icon">
+                                    <i data-lucide="gauge" class="icon-green"></i>
+                                    <h3>Model Evaluation Metrics</h3>
+                                </div>
+                                <span class="badge badge-success">Metrics</span>
+                            </div>
+                            <div class="card-body">
+                                <div class="metrics-grid">
+                                    <div class="metric-card">
+                                        <span class="metric-lbl">Accuracy</span>
+                                        <h2 id="metric-accuracy">100.0%</h2>
+                                        <span class="metric-sub" id="metric-split-info">On test split (80/20)</span>
+                                    </div>
+                                    <div class="metric-card">
+                                        <span class="metric-lbl">Total Features</span>
+                                        <h2>4</h2>
+                                        <span class="metric-sub">Sepal/Petal Dimensions</span>
+                                    </div>
+                                </div>
+
+                                <h4 class="section-subheading mt-large">Classification Report (Test Data)</h4>
+                                <div class="table-container">
+                                    <table class="report-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Class</th>
+                                                <th>Precision</th>
+                                                <th>Recall</th>
+                                                <th>F1-Score</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Setosa (0)</td>
+                                                <td id="rep-set-prec">1.00</td>
+                                                <td id="rep-set-rec">1.00</td>
+                                                <td id="rep-set-f1">1.00</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Versicolor (1)</td>
+                                                <td id="rep-ver-prec">1.00</td>
+                                                <td id="rep-ver-rec">1.00</td>
+                                                <td id="rep-ver-f1">1.00</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Virginica (2)</td>
+                                                <td id="rep-vir-prec">1.00</td>
+                                                <td id="rep-vir-rec">1.00</td>
+                                                <td id="rep-vir-f1">1.00</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <h4 class="section-subheading mt-large">Confusion Matrix</h4>
+                                <div class="matrix-flex-container">
+                                    <div class="confusion-matrix-wrapper">
+                                        <!-- Custom matrix grid in CSS -->
+                                        <div class="confusion-matrix" id="confusion-matrix-grid">
+                                            <!-- Headers -->
+                                            <div class="matrix-cell label-cell header-cell"></div>
+                                            <div class="matrix-cell header-cell">Pred 0</div>
+                                            <div class="matrix-cell header-cell">Pred 1</div>
+                                            <div class="matrix-cell header-cell">Pred 2</div>
+                                            <!-- Row 0 -->
+                                            <div class="matrix-cell label-cell header-cell">Act 0</div>
+                                            <div class="matrix-cell data-cell highlight-cell" id="cm-0-0">10</div>
+                                            <div class="matrix-cell data-cell" id="cm-0-1">0</div>
+                                            <div class="matrix-cell data-cell" id="cm-0-2">0</div>
+                                            <!-- Row 1 -->
+                                            <div class="matrix-cell label-cell header-cell">Act 1</div>
+                                            <div class="matrix-cell data-cell" id="cm-1-0">0</div>
+                                            <div class="matrix-cell data-cell highlight-cell" id="cm-1-1">9</div>
+                                            <div class="matrix-cell data-cell" id="cm-1-2">0</div>
+                                            <!-- Row 2 -->
+                                            <div class="matrix-cell label-cell header-cell">Act 2</div>
+                                            <div class="matrix-cell data-cell" id="cm-2-0">0</div>
+                                            <div class="matrix-cell data-cell" id="cm-2-1">0</div>
+                                            <div class="matrix-cell data-cell highlight-cell" id="cm-2-2">11</div>
+                                        </div>
+                                    </div>
+                                    <div class="matrix-explanation">
+                                        <p><span class="bullet setosa-bullet"></span> Setosa: 0</p>
+                                        <p><span class="bullet versicolor-bullet"></span> Versicolor: 1</p>
+                                        <p><span class="bullet virginica-bullet"></span> Virginica: 2</p>
+                                        <p class="matrix-comment text-muted mt-small">A clean diagonal means perfect classification with zero misclassifications.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 3: Data Explorer -->
+                <section id="explorer-sec" class="dashboard-section">
+                    <div class="glass-card full-width-card">
+                        <div class="card-header">
+                            <div class="title-with-icon">
+                                <i data-lucide="line-chart" class="icon-pink"></i>
+                                <h3>Iris Dataset Cluster Plot</h3>
+                            </div>
+                            <span class="badge">Visualization</span>
+                        </div>
+                        <div class="card-body chart-card-body">
+                            <div class="chart-controls">
+                                <div class="select-wrapper">
+                                    <label for="x-axis-select">X-Axis Feature:</label>
+                                    <div class="select-container">
+                                        <select id="x-axis-select" class="custom-select">
+                                            <option value="0">Sepal Length (cm)</option>
+                                            <option value="1">Sepal Width (cm)</option>
+                                            <option value="2" selected>Petal Length (cm)</option>
+                                            <option value="3">Petal Width (cm)</option>
+                                        </select>
+                                        <i data-lucide="chevron-down" class="select-arrow"></i>
+                                    </div>
+                                </div>
+                                <div class="select-wrapper">
+                                    <label for="y-axis-select">Y-Axis Feature:</label>
+                                    <div class="select-container">
+                                        <select id="y-axis-select" class="custom-select">
+                                            <option value="0">Sepal Length (cm)</option>
+                                            <option value="1">Sepal Width (cm)</option>
+                                            <option value="2">Petal Length (cm)</option>
+                                            <option value="3" selected>Petal Width (cm)</option>
+                                        </select>
+                                        <i data-lucide="chevron-down" class="select-arrow"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="chart-canvas-container">
+                                <canvas id="scatter-plot-canvas"></canvas>
+                            </div>
+                            
+                            <div class="chart-legend-box">
+                                <div class="legend-item"><span class="legend-color setosa-color"></span> Setosa</div>
+                                <div class="legend-item"><span class="legend-color versicolor-color"></span> Versicolor</div>
+                                <div class="legend-item"><span class="legend-color virginica-color"></span> Virginica</div>
+                                <div class="legend-item"><span class="legend-color user-target-color blinking"></span> Your Custom Input</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 4: Accordion FAQ Q&A -->
+                <section id="faq-sec" class="dashboard-section">
+                    <div class="glass-card full-width-card">
+                        <div class="card-header">
+                            <div class="title-with-icon">
+                                <i data-lucide="message-square" class="icon-blue"></i>
+                                <h3>Project Insights & FAQ</h3>
+                            </div>
+                            <span class="badge">Documentation</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="accordion-container" id="qa-accordion">
+                                <!-- Dynamic Q&A generated from Q&A file -->
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 5: Code Showcase -->
+                <section id="code-sec" class="dashboard-section">
+                    <div class="glass-card full-width-card">
+                        <div class="card-header">
+                            <div class="title-with-icon">
+                                <i data-lucide="code" class="icon-violet"></i>
+                                <h3>Backend Python (Scikit-Learn) vs Frontend JS Algorithms</h3>
+                            </div>
+                            <span class="badge">Code Compare</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="tabs-container">
+                                <div class="tabs-header">
+                                    <button class="tab-btn active" data-tab="python-code">Python Model Training</button>
+                                    <button class="tab-btn" data-tab="js-code">JS Inference Engine</button>
+                                    <button class="tab-btn" data-tab="fastapi-code">FastAPI Web Server</button>
+                                </div>
+                                <div class="tabs-content">
+                                    <!-- Python Tab -->
+                                    <div class="tab-panel active" id="python-code">
+                                        <pre><code># Training code in Python (iris_classification.ipynb)
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import LabelEncoder
+import pandas as pd
+
+# Load dataset
+iris_df = pd.read_csv('Iris.csv')
+
+# Drop duplicates & encode labels
+iris_df.drop_duplicates(inplace=True)
+le = LabelEncoder()
+iris_df['Species_encoded'] = le.fit_transform(iris_df['Species'])
+
+# Split Features & Target
+X = iris_df.drop(['Id', 'Species', 'Species_encoded'], axis=1, errors='ignore')
+y = iris_df['Species_encoded']
+
+# Split train/test sets (80% / 20%)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Fit Logistic Regression model
+model = LogisticRegression(max_iter=1000)
+model.fit(X_train, y_train)
+
+# Output evaluation metrics
+y_pred = model.predict(X_test)
+print("Accuracy:", model.score(X_test, y_test))</code></pre>
+                                    </div>
+
+                                    <!-- JS Tab -->
+                                    <div class="tab-panel" id="js-code">
+                                        <pre><code>// K-Nearest Neighbors Classifier written in Vanilla JavaScript
+class KNNClassifier {
+    constructor(k = 3, metric = 'euclidean') {
+        this.k = k;
+        this.metric = metric;
+    }
+
+    fit(X, y) {
+        this.X_train = X;
+        this.y_train = y;
+    }
+
+    distance(pt1, pt2) {
+        if (this.metric === 'manhattan') {
+            return pt1.reduce((sum, val, idx) => sum + Math.abs(val - pt2[idx]), 0);
+        }
+        // Default: Euclidean
+        const sumSq = pt1.reduce((sum, val, idx) => sum + Math.pow(val - pt2[idx], 2), 0);
+        return Math.sqrt(sumSq);
+    }
+
+    predictSingle(xQuery) {
+        // Calculate distances from query point to all training points
+        const dists = this.X_train.map((xTrain, idx) => ({
+            dist: this.distance(xQuery, xTrain),
+            label: this.y_train[idx]
+        }));
+
+        // Sort by ascending distance and get top K
+        dists.sort((a, b) => a.dist - b.dist);
+        const kNearest = dists.slice(0, this.k);
+
+        // Count votes per class
+        const votes = [0, 0, 0];
+        kNearest.forEach(n => votes[n.label]++);
+        
+        // Calculate probabilities
+        const sum = votes.reduce((a, b) => a + b, 0);
+        const probs = votes.map(v => v / sum);
+
+        return {
+            predictedClass: votes.indexOf(Math.max(...votes)),
+            probabilities: probs
+        };
+    }
+}</code></pre>
+                                    </div>
+
+                                    <!-- FastAPI Tab -->
+                                    <div class="tab-panel" id="fastapi-code">
+                                        <pre><code># Backend Serving API (app.py) using FastAPI
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
+import joblib
+import numpy as np
+
+app = FastAPI(title="Iris Classifier API", description="Serves Scikit-Learn models")
+
+# Enable CORS for local deployment
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# Load trained Model
+try:
+    model = joblib.load("iris_logistic_model.pkl")
+except:
+    model = None
+
+class FlowerFeatures(BaseModel):
+    sepal_length: float
+    sepal_width: float
+    petal_length: float
+    petal_width: float
+
+@app.post("/predict")
+def predict(features: FlowerFeatures):
+    if model is None:
+        return {"error": "Model pickle file not found. Place 'iris_logistic_model.pkl' in the directory."}
+        
+    input_data = np.array([[
+        features.sepal_length,
+        features.sepal_width,
+        features.petal_length,
+        features.petal_width
+    ]])
+    
+    prediction = int(model.predict(input_data)[0])
+    probs = model.predict_proba(input_data)[0].tolist()
+    
+    species_map = {0: "Setosa", 1: "Versicolor", 2: "Virginica"}
+    
+    return {
+        "species_id": prediction,
+        "species_name": species_map[prediction],
+        "probabilities": probs
+    }</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Main Logic Script -->
+    <script src="script.js"></script>
+</body>
+</html>
